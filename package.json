@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "bash-color": "latest",
+        "lodash": "latest",
+        "superagent": "latest",
+        "request": "latest"
+    }
+}
