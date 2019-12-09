@@ -1,16 +1,36 @@
-###  API proto 000
+###  Python & Flask prototype API
 
-#### Basically:
-A two hour project hard timebox.
+_....not an idiomatically pure (e.g. 'RESTful') API, just a prototype_
 
-#### Doing:
-A simple Python API to some notional functions, implemented in Flask, with a network test in Coffeescript.
+To me an API is a parametrically polymorphic function, and to the extent those are ubiquitous ("evenything is an API"), they are pretty generically a way to expose a function or functions.
 
-### Notes:
-I haven't used Python for something like this (API server) in awhile, so I spent some time actually setting up my environment and doing some cursory research.  Actually am working with a new (one month) computer and new OS (Windows from Ubuntu and Mac before) environment, so I reinstalled Python, and messed around with Cygwin and stuff like this for about the first 30 minutes.
+Here we use Python, Flask and Redis, providing some mock user data to test the system.
+
+No fancy URL encodings, everything is a POST request.
+
+## The API exposes a user-management function, with (sub)-functions:
+
+### Batch Upload Members: by CSV file
+Upload a CSV file keyed as `members_csv`
 
 
-There is a simple e2e test in the Coffeescript 'bot' file.  CS is very fast for prototyping stuff, so infrastructure/tooling gets done that way sometimes.  I could switch to Python for this.  I call it 'bot', because in my paradigm of back-end development, following the TDD idea, but starting from the top full integration test level rather than at the bottom --unit test-- level, we should have a failing comprehensive test of our application before its implementation.  For a very simple application such as this one, that test can be trivially implemented, but for something more complex, this would require a bot-net, with orchestration, event-logging, compute-node analysis, etc.
+### Read members by Account Number:
+Provide `account_id` in the JSON and you will be rewarded with all the members on that account.
+
+### Create Member
+Must provide JSON keyed with `id`, `first_name`, `last_name`, `phone_number`, `client_member_id`, and `account_id`.
+
+### Read Member
+Must pass JSON keyed with properties for `phone number`, `id`, and `member_client_id`, though any of those can have empty values.  System will return anything found by anything provided.
 
 
-The assignment called for treating this as production ready, and I considered this as a target, but optimization is a follow-on process by nature, and I'm just getting back into this Python context  -- I was last using it in numerical context with Numpy/Scipy/Keras/Pandas/Tensorflow stuff.
+## Setup:
+
+I'm using Python3 and the latest stable version of Redis.  In a real life development cycle, this would be containerized, but I guess that's overkill for a generic prototype.  You'll need NodeJS and Npm for the tests.  Do an `npm i` to install those dependencies.
+
+
+Start your Redis server.  
+
+Start the Python3 script `__init.py`.
+
+Then start `bot_48.coffee` with either `coffee` or `nodemon`, both of which can be installed with `npm` globally.

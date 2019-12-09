@@ -3,6 +3,7 @@
         "bash-color": "latest",
         "lodash": "latest",
         "superagent": "latest",
+        "redis": "latest",
         "request": "latest"
     }
 }
